@@ -1,29 +1,21 @@
-
+'use strict';
+const Hoover = require('./hoover.js');
+const Patch = require('./patch.js');
+const Room = require('./room.js');
 
 var specs = {
-  roomX : 5,
-  roomY : 5,
-  hooverX : 1,
-  hooverY : 2,
-  dirtPatches : [
-    {
-      x : 1,
-      y : 0
-    },
-    {
-      x : 2,
-      y : 2
-    },
-    {
-      x : 2,
-      y : 3
-    }
+  room : new Room(5,5),
+  hoover : new Hoover(1,2),
+  patches : [
+    new Patch(1,0),
+    new Patch(2,2),
+    new Patch(2,3)
   ],
   instructions : 'NNESEESWNWW'
-  //instructions : 'NNNNNNNNNNESSSSSSSSSSSSENNNNNNNNNNNNESSSSSSSSSSSSWWWWWWWWWWWWWWW'
 };
 
 console.log(specs);
+console.log('-----------\n');
 
 var initialize = function(specs){
   //exit if null
@@ -31,29 +23,30 @@ var initialize = function(specs){
     return !specs;
   }
 
-  var dirtPatchMap = new Map();
-  for (patch of specs.dirtPatches){
-     dirtPatchMap.set(`${patch.x},${patch.y}`,false);
+  var patchMap = new Map();
+  for (let patch of specs.patches){
+     patchMap.set(`${patch.x},${patch.y}`,patch);
   }
-  specs.dirtPatchMap = dirtPatchMap;
-  console.log(dirtPatchMap);
+  specs.patchMap = patchMap;
+  console.log(patchMap);
+  console.log('-----------\n');
   return specs;
 };
 
 specs = initialize(specs);
 
 var sanitizeXY = function(specs){
-  if (specs.hooverX == specs.roomX){
-    specs.hooverX = specs.roomX - 1;
+  if (specs.hoover.x == specs.room.width){
+    specs.hoover.x = specs.room.width - 1;
   }
-  if (specs.hooverX == -1){
-    specs.hooverX = 0;
+  if (specs.hoover.x == -1){
+    specs.hoover.x = 0;
   }
-  if (specs.hooverY == specs.roomY){
-    specs.hooverY = specs.roomY - 1;
+  if (specs.hoover.y == specs.room.height){
+    specs.hoover.y = specs.room.height - 1;
   }
-  if (specs.hooverY == -1){
-    specs.hooverY = 0;
+  if (specs.hoover.y == -1){
+    specs.hoover.y = 0;
   }
   return specs;
 }
@@ -62,8 +55,8 @@ var sanitizeXY = function(specs){
 
 var driveHoover = function(specs){
   var nCleanedPatches = 0;
-  console.log(`Starting at ${specs.hooverX},${specs.hooverY}`);
-  for (instruction of specs.instructions.split("")){
+  console.log(`Starting at: \t${specs.hoover.output()}`);
+  for (let instruction of specs.instructions.split("")){
     var driveX = 0;
     var driveY = 0;
     switch(instruction) {
@@ -80,21 +73,23 @@ var driveHoover = function(specs){
         driveX = -1;
         break;
     }
-    specs.hooverX += driveX;
-    specs.hooverY += driveY;
+    specs.hoover.x += driveX;
+    specs.hoover.y += driveY;
     specs = sanitizeXY(specs);
-    console.log(`Driving ${instruction} ${driveX},${driveY}: ${specs.hooverX},${specs.hooverY}`);
+    console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${specs.hoover.output()}`);
 
-    if (specs.dirtPatchMap.get(`${specs.hooverX},${specs.hooverY}`) === false){
+    var patch = specs.patchMap.get(`${specs.hoover.x},${specs.hoover.y}`);
+    if (patch != null && patch.isDirty){
       console.log('Cleaning dirt patch!');
-      specs.dirtPatchMap.set(`${specs.hooverX},${specs.hooverY}`, true);
-      console.log(specs.dirtPatchMap);
+      patch.isDirty = false;
+      console.log(specs.patchMap);
       nCleanedPatches++;
     }
   }
-
+  console.log('------------\n');
   console.log(`nCleanedPatches ${nCleanedPatches}`);
-
-
 };
 driveHoover(specs);
+
+
+console.log('------------');
