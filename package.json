@@ -1,0 +1,23 @@
+{
+  "name": "virtual-hoover",
+  "version": "1.0.0",
+  "description": "A program that navigates a imaginary robotic hoover through an equally imaginary room. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoover-challenge/virtual-hoover/"
+  },
+  "keywords": [
+    "hoover",
+    "challenge"
+  ],
+  "author": "Nico Schomberg",
+  "license": "MIT",
+  "devDependencies": {
+    "line-by-line": "^0.1.4"
+  }
+}
