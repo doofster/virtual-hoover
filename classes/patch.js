@@ -11,7 +11,7 @@ module.exports = class Patch {
 		if (this.isDirty) {
 			this.isDirty = false;
 			console.log('Cleaning dirt patch!');
-			global.nCleanedPatches++;
+			//global.nCleanedPatches++;
 			return true;
 		}
 		return false;

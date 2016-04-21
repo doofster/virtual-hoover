@@ -1,3 +1,5 @@
+
+
 module.exports = function(grunt) {
 	grunt.initConfig({
 		// fetch package info in case we want to reuse it down the line
@@ -19,6 +21,7 @@ module.exports = function(grunt) {
 				tasks: ['default']
 			}
 		},
+		//beautifier to keep our files neat and tidy
 		"jsbeautifier": {
 			files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
 			options: {

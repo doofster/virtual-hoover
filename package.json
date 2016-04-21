@@ -4,7 +4,7 @@
 	"description": "A program that navigates a imaginary robotic hoover through an equally imaginary room. ",
 	"main": "index.js",
 	"scripts": {
-		"test": "mocha test/test.js",
+		"test": "mocha test/**/*.js",
 		"start": "node index.js"
 	},
 	"repository": {

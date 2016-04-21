@@ -1,8 +1,15 @@
 'use strict';
+
+//Importing classes
+const Hoover = require('../classes/hoover.js');
+const Patch = require('../classes/patch.js');
+const Room = require('../classes/room.js');
+
 module.exports = class Hoover {
 	constructor(x, y) {
 		this.x = x;
 		this.y = y;
+		this.nCleanedPatches = 0;
 	}
 
 	drive(instruction) {
@@ -26,10 +33,24 @@ module.exports = class Hoover {
 		this.y += driveY;
 
 		this.detectCollisions();
+		this.hooverPatch();
+
 		console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
 	}
 
+	hooverPatch(){
+		let patch = global.patchMap.get(Patch.generatePatchKey(this.x, this.y));
+		if (patch !== undefined) {
+			if (patch.hoover()){
+				this.nCleanedPatches++;
+			}
+		}
+	}
+
 	detectCollisions() {
+
+		console.log(Room.room);
+
 		let width = 5;
 		let height = 5;
 
@@ -48,6 +69,6 @@ module.exports = class Hoover {
 	}
 
 	output() {
-		return `(${this.x},${this.y})`;
+		return `${this.x} ${this.y}\n${this.nCleanedPatches}`;
 	}
 };

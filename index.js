@@ -7,26 +7,25 @@ const Patch = require('./classes/patch.js');
 const input = require('./utils/input.js');
 const output = require('./utils/output.js');
 
-let driveHoover = function() {
-	global.nCleanedPatches = 0;
-	console.log(`Starting at: \t${global.hoover.output()}`);
-	for (let instruction of global.instructions.split("")) {
-		global.hoover.drive(instruction);
-		let patch = global.patchMap.get(Patch.generatePatchKey(global.hoover.x, global.hoover.y));
-		if (patch !== undefined) {
-			patch.hoover();
-		}
+let driveHoover = function(specSheet) {
+	let hoover = specSheet.hoover;
+	global.patchMap = specSheet.patchMap; //This needs to be moved into the room class (or something)
+
+	console.log(`Starting at: \t${hoover.output()}`);
+	//Make sure we hoover on our starting position
+	hoover.hooverPatch();
+
+
+	for (let instruction of specSheet.instructions.split("")) {
+			hoover.drive(instruction);
 	}
-	output.print();
+	console.log(hoover.output());
 };
 
-var run = function() {
-	console.log(global.room);
-	console.log(global.hoover);
-	console.log(global.patchMap);
-	console.log(global.instructions);
+var run = function(specSheet) {
+	console.log(specSheet);
 	console.log('===============');
-	driveHoover();
+	driveHoover(specSheet);
 };
 
 input.initialize(run);

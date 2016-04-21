@@ -32,12 +32,22 @@ var initialize = function(callback) {
 	});
 
 	rl.on('close', function() {
-		global.hoover = hoover;
+		/*global.hoover = hoover;
 		global.room = room;
 		global.patchMap = patchMap;
 		global.instructions = instructions;
-		global.nCleanedPatches = 0;
-		callback();
+		*/
+
+		//global.nCleanedPatches = 0;
+
+		let specSheet = {
+			room : room,
+			hoover : hoover,
+			patchMap : patchMap,
+			instructions : instructions
+		};
+
+		callback(specSheet);
 	});
 };
 module.exports.initialize = initialize;
