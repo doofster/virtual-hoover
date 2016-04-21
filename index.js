@@ -7,9 +7,6 @@ const Patch = require('./classes/patch.js');
 const input = require('./utils/input.js');
 const output = require('./utils/output.js');
 
-
-
-
 let driveHoover = function() {
 	global.nCleanedPatches = 0;
 	console.log(`Starting at: \t${global.hoover.output()}`);
