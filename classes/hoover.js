@@ -25,11 +25,11 @@ module.exports = class Hoover {
 		this.x += driveX;
 		this.y += driveY;
 
-		this.sanitize();
+		this.detectCollisions();
 		console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
 	}
 
-	sanitize() {
+	detectCollisions() {
 		let width = 5;
 		let height = 5;
 
