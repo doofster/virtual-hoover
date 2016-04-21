@@ -10,17 +10,17 @@ module.exports = function(grunt) {
 				node: true //tell my linter to chill out
 			},
 			//run this task for all js files
-			build: ['gruntfile.js', 'index.js', '/classes/**/*.js', 'config.json', 'package.json']
+			build: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json']
 		},
 		//watch will kick off some tasks when my files change
 		watch: {
 			scripts: {
-				files: ['gruntfile.js', 'index.js', '/classes/**/*.js', 'config.json', 'package.json'],
+				files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
 				tasks: ['default']
 			}
 		},
 		"jsbeautifier": {
-			files: ['gruntfile.js', 'index.js', '/classes/**/*.js', 'config.json', 'package.json'],
+			files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
 			options: {
 				"js": {
 					break_chained_methods: true,

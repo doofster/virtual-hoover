@@ -1,8 +1,7 @@
 'use strict';
 
-var print = function(hoover,nCleanedPatches){
-  console.log('*************');
-  console.log(`${hoover.x} ${hoover.y}\n${nCleanedPatches}`);
-}
-
+var print = function() {
+	console.log('*************');
+	console.log(`${global.hoover.x} ${global.hoover.y}\n${global.nCleanedPatches}`);
+};
 module.exports.print = print;
