@@ -7,7 +7,7 @@ const Room = require('../classes/room.js');
 
 
 module.exports = class SpecSheet {
-	constructor(filePath, callback) {
+	constructor(filePath, resolve, reject) {
 		this.filePath = filePath;
 		this.room = {};
 		this.hoover = {};
@@ -15,57 +15,50 @@ module.exports = class SpecSheet {
 		this.instructions = [];
 		this.lineIndex = 0;
 
-		this.load();
+		this.load(resolve, reject);
 	}
 
-	load() {
+	load(resolve, reject) {
 		//Set up the file read operation (https://github.com/nodejs/node/pull/4609/files)
 		const readline = require('readline');
 		const fs = require('fs');
-		let specSheet = this;
-		console.log('doofsheet');
-		console.log(specSheet);
-		let parse = this.parse;
 
-		const rl = readline.createInterface({
-			input: fs.createReadStream(this.filePath)
+		//Let's put "this" in its own variable to bypass some variable scope problems inside the events below
+		let specSheet = this;
+
+		let stream = fs.createReadStream(this.filePath);
+		stream.on('error', function(err) {
+			reject('Error while attempting to read file!');
 		});
 
-		rl.on('line', function(specSheet, line) {
-			//console.log('doof loine');
-			//console.log(specSheet);
-			parse(line, specSheet);
-		}.bind(this, specSheet));
+		const rl = readline.createInterface({
+			input: stream
+		});
 
-		rl.on('close', function(specSheet) {
-			console.log(specSheet);
-			/*console.log('========================');
-			room.patchMap = patchMap;
-			hoover.room = room;
-			//TODO move this to constructor
-			hoover.registerInstructions(instructions);*/
-			//callback(this.hoover);
-			//
-			//console.log(this);
-		}.bind(this, specSheet));
+		rl.on('line', function(line) {
+			specSheet.parse(line);
+		}.bind(this));
+
+		rl.on('close', function() {
+			resolve(specSheet);
+		}.bind(this));
 	}
 
-	parse(line, specSheet) {
+	parse(line) {
 		if (line === undefined) {
-			console.log('end of the file');
-
+			//console.log('end of the file');
 			return;
 		}
-		console.log(`${specSheet.lineIndex}:\t${line}`);
-		if (specSheet.lineIndex === 0) {
+		console.log(`${this.lineIndex}:\t${line}`);
+		if (this.lineIndex === 0) {
 			let dimensions = line.split(" ");
-			specSheet.room = {
+			this.room = {
 				width: parseInt(dimensions[0]),
 				height: parseInt(dimensions[1])
 			};
-		} else if (specSheet.lineIndex === 1) {
+		} else if (this.lineIndex === 1) {
 			let coordinates = line.split(" ");
-			specSheet.hoover = {
+			this.hoover = {
 				x: parseInt(coordinates[0]),
 				y: parseInt(coordinates[1])
 			};
@@ -73,13 +66,13 @@ module.exports = class SpecSheet {
 			let coordinates = line.split(" ");
 			if (coordinates.length === 2) {
 				let patch = new Patch(parseInt(coordinates[0]), parseInt(coordinates[1]));
-				specSheet.patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
+				this.patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
 			} else {
 				//Split all instructions into an array
-				specSheet.instructions = coordinates[0].split("");
+				this.instructions = coordinates[0].split("");
 			}
 		}
 
-		specSheet.lineIndex++;
+		this.lineIndex++;
 	}
 };
