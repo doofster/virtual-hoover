@@ -1,4 +1,4 @@
-var expect = require('chai').expect;
+/*var expect = require('chai').expect;
 //var index = require('../index.js');
 
 describe('Hoover', function() {
@@ -23,3 +23,4 @@ describe('Hoover', function() {
     });
   });
 });
+*/

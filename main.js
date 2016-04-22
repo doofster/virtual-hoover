@@ -5,8 +5,8 @@ const Hoover = require('./classes/hoover.js');
 const SpecSheet = require('./classes/spec-sheet.js');
 
 // This is the entry point for the app.
-// This function loads the specified file from the filePath parameter and will execute the callback function upon success
-let init = function(filePath, callback) {
+// This function loads the specified file from the filePath parameter and will execute: the callback function upon success, the error function upon failure
+let init = function(filePath, callback, error) {
 	// Because the file read operation is asynchronous, let's leverage this fancy Promise API to handle our AJAX cleanly.
 	// (More info on promises: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 	let readFile = new Promise(
@@ -27,6 +27,7 @@ let init = function(filePath, callback) {
 		.catch( // The catch block handles the error case.
 			function(reason) { // Display an error message before exiting
 				console.log(`An error was encountered while putting together the spec sheet :( ${reason}`);
+				error();
 			}
 		);
 };
@@ -34,7 +35,8 @@ module.exports.init = init; // Make this method accesible to the module
 
 // This function takes in a specSheet and spins up a hoover.
 // The hoover will then execute all its instructions.
-let run = function(specSheet) {
+// Optional callback will be run at the end
+let run = function(specSheet, callback) {
 
 	let hoover;
 	module.exports.hoover = hoover;// Make this var accesible to the module
@@ -54,5 +56,7 @@ let run = function(specSheet) {
 	} catch (e){ // Display an error message before exiting
 		console.log(`An error was encountered while processing an instruction :( ${e}`);
 	}
+
+	callback();
 };
 module.exports.run = run; // Make this method accesible to the module

@@ -1,4 +1,4 @@
-var expect = require('chai').expect;
+/*var expect = require('chai').expect;
 var index = require('../index.js');
 
 describe('Array', function() {
@@ -9,3 +9,4 @@ describe('Array', function() {
     });
   });
 });
+*/

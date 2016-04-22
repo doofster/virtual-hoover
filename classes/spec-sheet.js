@@ -60,7 +60,7 @@ module.exports = class SpecSheet {
 		if (line === undefined) {
 			return;
 		}
-		console.log(`${this.lineIndex}:\t${line}`);
+		//console.log(`${this.lineIndex}:\t${line}`);
 		//First line corresponds to room dimensions
 		if (this.lineIndex === 0) {
 			try {
