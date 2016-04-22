@@ -1,8 +1,5 @@
 'use strict';
-
-//Import config file
-const config = require('../config.json');
-
+/*
 //Importing classes
 const Hoover = require('../classes/hoover.js');
 const Patch = require('../classes/patch.js');
@@ -10,21 +7,24 @@ const Room = require('../classes/room.js');
 
 //vars
 let lineIndex = 0;
-let currentLine;
-
-let room;
-let hoover;
-let instructions;
-let patchMap = new Map();
 
 
-var initialize = function(callback) {
+//TODO move this somewhere better, not global;
+let specSheet = {
+	room : {},
+	hoover : {},
+	patchMap : new Map(),
+	instructions: new Array()
+}
+
+
+var initialize = function(inputFilePath, callback) {
 	//Set up the file read operation (https://github.com/nodejs/node/pull/4609/files)
 	const readline = require('readline');
 	const fs = require('fs');
 
 	const rl = readline.createInterface({
-		input: fs.createReadStream(config.inputFilePath)
+		input: fs.createReadStream(inputFilePath)
 	});
 
 	rl.on('line', function(line) {
@@ -32,22 +32,12 @@ var initialize = function(callback) {
 	});
 
 	rl.on('close', function() {
-		/*global.hoover = hoover;
-		global.room = room;
-		global.patchMap = patchMap;
-		global.instructions = instructions;
-		*/
-
-		//global.nCleanedPatches = 0;
-
-		let specSheet = {
-			room : room,
-			hoover : hoover,
-			patchMap : patchMap,
-			instructions : instructions
-		};
-
-		callback(specSheet);
+		console.log('========================');
+		room.patchMap = patchMap;
+		hoover.room = room;
+		//TODO move this to constructor
+		hoover.registerInstructions(instructions);
+		callback(hoover);
 	});
 };
 module.exports.initialize = initialize;
@@ -61,20 +51,26 @@ var parse = function(line) {
 	console.log(`${lineIndex}:\t${line}`);
 	if (lineIndex === 0) {
 		let dimensions = line.split(" ");
-		room = new Room(parseInt(dimensions[0]), parseInt(dimensions[1]));
+		specSheet.room = {
+			width : parseInt(dimensions[0]),
+			height : parseInt(dimensions[1])
+		};
 	} else if (lineIndex === 1) {
 		let coordinates = line.split(" ");
-		hoover = new Hoover(parseInt(coordinates[0]), parseInt(coordinates[1]));
+		specSheet.hoover = {
+			x : parseInt(coordinates[0]),
+			y : parseInt(coordinates[1])
+		};
 	} else {
 		let coordinates = line.split(" ");
 		if (coordinates.length === 2) {
 			let patch = new Patch(parseInt(coordinates[0]), parseInt(coordinates[1]));
-			patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
+			specSheet.patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
 		} else {
-			instructions = coordinates[0];
+			instructions = coordinates[0].split("");
 		}
 	}
 
 	lineIndex++;
 };
-module.exports.parse = parse;
+*/

@@ -1,7 +1,7 @@
 {
 	"name": "virtual-hoover",
 	"version": "1.0.0",
-	"description": "A program that navigates a imaginary robotic hoover through an equally imaginary room. ",
+	"description": "A program that navigates a imaginary robotic hoover through an equally imaginary room.",
 	"main": "index.js",
 	"scripts": {
 		"test": "mocha test/**/*.js",

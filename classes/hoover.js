@@ -13,6 +13,10 @@ module.exports = class Hoover {
 	}
 
 	drive(instruction) {
+		if (instruction === undefined) {
+			return false;
+		}
+
 		let driveX = 0;
 		let driveY = 0;
 		switch (instruction) {
@@ -36,12 +40,13 @@ module.exports = class Hoover {
 		this.hooverPatch();
 
 		console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
+		return true;
 	}
 
-	hooverPatch(){
-		let patch = global.patchMap.get(Patch.generatePatchKey(this.x, this.y));
+	hooverPatch() {
+		let patch = this.room.patchMap.get(Patch.generatePatchKey(this.x, this.y));
 		if (patch !== undefined) {
-			if (patch.hoover()){
+			if (patch.hoover()) {
 				this.nCleanedPatches++;
 			}
 		}
@@ -49,10 +54,8 @@ module.exports = class Hoover {
 
 	detectCollisions() {
 
-		console.log(Room.room);
-
-		let width = 5;
-		let height = 5;
+		let width = this.room.width;
+		let height = this.room.height;
 
 		if (this.x >= width) {
 			this.x = width - 1;
@@ -68,7 +71,26 @@ module.exports = class Hoover {
 		}
 	}
 
+	registerInstructions(instructions) {
+		this.instructions = [];
+		for (let instruction of instructions.split("")) {
+			this.instructions.push(instruction);
+		}
+		console.log(`Instructions: ${this.instructions}`);
+	}
+
 	output() {
-		return `${this.x} ${this.y}\n${this.nCleanedPatches}`;
+		return (`${this.x} ${this.y}\n${this.nCleanedPatches}`);
+	}
+
+	processInstruction() {
+		let isDone = !this.drive(this.instructions.shift());
+
+		if (isDone) {
+			console.log('=============================');
+			console.log(this.output());
+		}
+
+		return isDone;
 	}
 };

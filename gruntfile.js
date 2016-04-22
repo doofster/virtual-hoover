@@ -1,5 +1,3 @@
-
-
 module.exports = function(grunt) {
 	grunt.initConfig({
 		// fetch package info in case we want to reuse it down the line
