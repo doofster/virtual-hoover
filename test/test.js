@@ -6,8 +6,7 @@ describe('Run Through', function() {
     it('should solve the run from the prompt', function(done) {
 
       var app = require('../main.js');
-      var testFilePath = './files/input.txt';
-      console.log(testFilePath);
+      var testFilePath = './test/files/input.txt';
 
       var callback = function(){
         expect(app.hoover.x).to.equal(1);

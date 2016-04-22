@@ -44,7 +44,7 @@ module.exports = class Hoover {
 		this.detectCollisions();
 		this.hooverPatch();
 
-		console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
+		//console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
 		return true;
 	}
 
@@ -81,19 +81,18 @@ module.exports = class Hoover {
 		for (let instruction of instructions.split("")) {
 			this.instructions.push(instruction);
 		}
-		console.log(`Instructions: ${this.instructions}`);
+		//console.log(`Instructions: ${this.instructions}`);
 	}
 
 	output() {
-		return (`${this.x} ${this.y}\n${this.nCleanedPatches}`);
+		process.stdout.write(`${this.x} ${this.y}\n${this.nCleanedPatches}`);
 	}
 
 	processInstruction() {
 		let isDone = !this.drive(this.instructions.shift());
 
 		if (isDone) {
-			console.log('=============================');
-			console.log(this.output());
+			this.output();
 		}
 
 		return isDone;

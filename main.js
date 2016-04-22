@@ -26,7 +26,7 @@ let init = function(filePath, callback, error) {
 		)
 		.catch( // The catch block handles the error case.
 			function(reason) { // Display an error message before exiting
-				console.log(`An error was encountered while putting together the spec sheet :( ${reason}`);
+				console.log(`An error was encountered while putting together the spec sheet :(\n${reason}`);
 				error();
 			}
 		);
@@ -49,7 +49,7 @@ let run = function(specSheet, callback) {
 
 		//return; //That's it we're done!
 	} catch (e) { // Display an error message before exiting
-		console.log(`An error was encountered while processing an instruction :( ${e}`);
+		console.log(`An error was encountered while processing an instruction :(\n${e}`);
 	}
 
 	module.exports.hoover = hoover; // Make this var accesible to the module
@@ -67,7 +67,7 @@ let bootUpHoover = function(specSheet) {
 	try { // Instanciate a hoover from the resulting spec sheet
 		hoover = new Hoover(specSheet);
 	} catch (e) { // Display an error message before exiting
-		console.log(`An error was encountered while booting up the hoover :( ${e}`);
+		console.log(`An error was encountered while booting up the hoover :(\n${e}`);
 	}
 	return hoover;
 };

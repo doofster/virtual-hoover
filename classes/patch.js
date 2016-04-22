@@ -10,7 +10,7 @@ module.exports = class Patch {
 	hoover() {
 		if (this.isDirty) {
 			this.isDirty = false;
-			console.log('Cleaning dirt patch!');
+			//console.log('Cleaning dirt patch!');
 			//global.nCleanedPatches++;
 			return true;
 		}
