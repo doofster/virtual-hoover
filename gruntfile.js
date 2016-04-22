@@ -1,25 +1,25 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
-		// fetch package info in case we want to reuse it down the line
+		// Fetch package info in case we want to reuse it down the line
 		pkg: grunt.file.readJSON('package.json'),
-		//js linter to catch potential goofs
+		// Js linter to catch potential goofs
 		jshint: {
 			options: {
-				esversion: 6,
-				reporter: require('jshint-stylish'), //beautify/normalize formatting
-				node: true //tell my linter to chill out
+				esversion: 6, // Use es6 standards
+				reporter: require('jshint-stylish'), // Nice formatting
+				node: true // Tell the linter to chill out
 			},
-			//run this task for all js files
+			// Run this task for all js files (except for our node_modules)
 			build: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json']
 		},
-		//watch will kick off some tasks when my files change
+		// Watch will kick off some tasks when my files change
 		watch: {
 			scripts: {
 				files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
 				tasks: ['default']
 			}
 		},
-		//beautifier to keep our files neat and tidy
+		// Beautifier to keep our files neat and tidy
 		"jsbeautifier": {
 			files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
 			options: {
@@ -36,10 +36,10 @@ module.exports = function(grunt) {
 		}
 	});
 
-	//Set up our default task
+	// Set up our default task
 	grunt.registerTask('default', ['jshint', 'jsbeautifier']);
 
-	//Load up our installed packages
+	// Load up our installed packages
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks("grunt-jsbeautifier");

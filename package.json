@@ -18,12 +18,12 @@
 	"author": "Nico Schomberg",
 	"license": "MIT",
 	"devDependencies": {
-		"line-by-line": "^0.1.4",
+		"chai": "^3.5.0",
 		"grunt": "^0.4.5",
 		"grunt-contrib-jshint": "^0.12.0",
 		"grunt-contrib-watch": "^0.6.1",
 		"grunt-jsbeautifier": "^0.2.10",
 		"jshint-stylish": "^2.1.0",
-		"chai": "^3.5.0"
+		"mocha": "^2.4.5"
 	}
 }

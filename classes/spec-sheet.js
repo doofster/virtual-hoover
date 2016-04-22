@@ -5,7 +5,6 @@ const Hoover = require('../classes/hoover.js');
 const Patch = require('../classes/patch.js');
 const Room = require('../classes/room.js');
 
-
 module.exports = class SpecSheet {
 	constructor(filePath, resolve, reject) {
 		this.filePath = filePath;
@@ -102,9 +101,15 @@ module.exports = class SpecSheet {
 			//All following lines can be either patch coordinates, or instructions
 		} else {
 			let coordinates = line.split(" ");
+			//If there are two coordinates, assume that it is a patch coordinate
 			if (coordinates.length === 2) {
-				let patch = new Patch(parseInt(coordinates[0]), parseInt(coordinates[1]));
-				this.patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
+				try {
+					let patch = new Patch(parseInt(coordinates[0]), parseInt(coordinates[1]));
+					this.patchMap.set(Patch.generatePatchKey(patch.x, patch.y), patch);
+				} catch (e) {
+					//All exceptions in this block reject the promise with the appropriate error message
+					reject('Bad patch position.');
+				}
 			} else {
 				try {
 					this.instructions = this.parseInstructions(line);
