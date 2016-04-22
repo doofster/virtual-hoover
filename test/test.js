@@ -1,12 +1,22 @@
-/*var expect = require('chai').expect;
-var index = require('../index.js');
+var expect = require('chai').expect;
+var folder = './test/files/';
 
-describe('Array', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      expect(-1).to.equal([1,2,3].indexOf(5));
-      expect(-1).to.equal([1,2,3].indexOf(0));
+describe('Run Through', function() {
+  describe('I - Top to bottom', function() {
+    it('should solve the run from the prompt', function(done) {
+
+      var app = require('../main.js');
+      var testFilePath = './files/input.txt';
+      console.log(testFilePath);
+
+      var callback = function(){
+        expect(app.hoover.x).to.equal(1);
+        expect(app.hoover.y).to.equal(3);
+        expect(app.hoover.nCleanedPatches).to.equal(1);
+        done();
+      }
+
+      app.init(testFilePath,function(result){app.run(result,callback);});
     });
   });
 });
-*/

@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
 var folder = './test/files/';
-//var index = require('../index.js');
 
 describe('Spec Sheet Parser', function() {
   describe('I - Find File', function() {
@@ -68,6 +67,28 @@ describe('Spec Sheet Parser', function() {
       it('should fail gracefully when NaN', function(done) {
         var app = require('../main.js');
         var testFilePath = folder + 'invalid-room-NaN.txt';
+        app.init(testFilePath,function(){done();}, done);
+      });
+    });
+    describe('* Invalid Hoover', function() {
+      it('should fail gracefully when zero x', function(done) {
+        var app = require('../main.js');
+        var testFilePath = folder + 'invalid-hoover-negative-x.txt';
+        app.init(testFilePath,function(){done();}, done);
+      });
+      it('should fail gracefully when zero y', function(done) {
+        var app = require('../main.js');
+        var testFilePath = folder + 'invalid-hoover-negative-y.txt';
+        app.init(testFilePath,function(){done();}, done);
+      });
+      it('should fail gracefully when missing coordinate', function(done) {
+        var app = require('../main.js');
+        var testFilePath = folder + 'invalid-hoover-missing-coordinate.txt';
+        app.init(testFilePath,function(){done();}, done);
+      });
+      it('should fail gracefully when NaN', function(done) {
+        var app = require('../main.js');
+        var testFilePath = folder + 'invalid-hoover-NaN.txt';
         app.init(testFilePath,function(){done();}, done);
       });
     });

@@ -39,24 +39,36 @@ module.exports.init = init; // Make this method accesible to the module
 let run = function(specSheet, callback) {
 
 	let hoover;
-	module.exports.hoover = hoover;// Make this var accesible to the module
 
-	try{ // Instanciate a hoover from the resulting spec sheet
-		hoover = new Hoover(specSheet);
-	} catch (e){ // Display an error message before exiting
-		console.log(`An error was encountered while booting up the hoover :( ${e}`);
-	}
+	hoover = bootUpHoover(specSheet);
 
-	try{ // Process all instructions one by one
+	try { // Process all instructions one by one
 		while (!hoover.processInstruction()) {
 			//console.log('processing instruction');
 		}
 
 		//return; //That's it we're done!
-	} catch (e){ // Display an error message before exiting
+	} catch (e) { // Display an error message before exiting
 		console.log(`An error was encountered while processing an instruction :( ${e}`);
 	}
 
-	callback();
+	module.exports.hoover = hoover; // Make this var accesible to the module
+
+	//Only call the optional callback if it is defined
+	if (callback) {
+		callback();
+	}
+
 };
 module.exports.run = run; // Make this method accesible to the module
+
+let bootUpHoover = function(specSheet) {
+	let hoover;
+	try { // Instanciate a hoover from the resulting spec sheet
+		hoover = new Hoover(specSheet);
+	} catch (e) { // Display an error message before exiting
+		console.log(`An error was encountered while booting up the hoover :( ${e}`);
+	}
+	return hoover;
+};
+module.exports.bootUpHoover = bootUpHoover;

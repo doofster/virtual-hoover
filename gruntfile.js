@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+	var jsFiles = ['gruntfile.js', 'index.js', 'main.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'];
 	grunt.initConfig({
 		// Fetch package info in case we want to reuse it down the line
 		pkg: grunt.file.readJSON('package.json'),
@@ -10,18 +11,18 @@ module.exports = function(grunt) {
 				node: true // Tell the linter to chill out
 			},
 			// Run this task for all js files (except for our node_modules)
-			build: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json']
+			build: jsFiles
 		},
 		// Watch will kick off some tasks when my files change
 		watch: {
 			scripts: {
-				files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
+				files: jsFiles,
 				tasks: ['default']
 			}
 		},
 		// Beautifier to keep our files neat and tidy
 		"jsbeautifier": {
-			files: ['gruntfile.js', 'index.js', 'classes/**/*.js', 'utils/**/*.js', 'config.json', 'package.json'],
+			files: jsFiles,
 			options: {
 				"js": {
 					break_chained_methods: true,

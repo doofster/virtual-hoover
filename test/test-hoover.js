@@ -1,26 +1,91 @@
-/*var expect = require('chai').expect;
+var expect = require('chai').expect;
+var folder = './test/files/';
+var Hoover = require('../classes/hoover.js');
 //var index = require('../index.js');
 
 describe('Hoover', function() {
-  describe('hoovering', function () {
-    it('should clean a patch on its starting position', function () {
+  describe('I - Driving', function() {
+    it('should drive in the right directions', function() {
+      var specSheet = {
+        room: {
+          width : 5,
+          height : 5
+        },
+        hoover: {
+          x: 0,
+          y: 0
+        },
+        instructions : [],
+        patchMap : new Map()
+      }
+      var hoover = new Hoover(specSheet);
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(0);
+
+      hoover.drive('N');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(1);
+
+      hoover.drive('E');
+      expect(hoover.x).to.equal(1);
+      expect(hoover.y).to.equal(1);
+
+      hoover.drive('S');
+      expect(hoover.x).to.equal(1);
+      expect(hoover.y).to.equal(0);
+
+      hoover.drive('W');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(0);
+
     });
-    it('should clean a patch on its end position', function () {
-    });
-    it('should clean every patch it travels through', function () {
-    });
-  });
-  describe('driving', function () {
-    it('should drive N', function () {
-    });
-    it('should drive E', function () {
-    });
-    it('should drive S', function () {
-    });
-    it('should drive W', function () {
-    });
-    it('should skid in place when it collides with a wall', function () {
+    it('should not run into walls', function() {
+      var specSheet = {
+        room: {
+          width : 5,
+          height : 5
+        },
+        hoover: {
+          x: 0,
+          y: 0
+        },
+        instructions : [],
+        patchMap : new Map()
+      }
+      var hoover = new Hoover(specSheet);
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(0);
+
+      hoover.drive('S');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(0);
+
+      hoover.drive('W');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(0);
+
+      hoover.drive('N');
+      hoover.drive('N');
+      hoover.drive('N');
+      hoover.drive('N');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(4);
+
+      hoover.drive('N');
+      expect(hoover.x).to.equal(0);
+      expect(hoover.y).to.equal(4);
+
+      hoover.drive('E');
+      hoover.drive('E');
+      hoover.drive('E');
+      hoover.drive('E');
+      expect(hoover.x).to.equal(4);
+      expect(hoover.y).to.equal(4);
+
+      hoover.drive('E');
+      expect(hoover.x).to.equal(4);
+      expect(hoover.y).to.equal(4);
+
     });
   });
 });
-*/
