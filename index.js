@@ -1,24 +1,14 @@
 'use strict';
 
 //Import classes
-const Patch = require('./classes/patch.js');
-const SpecSheet = require('./classes/specSheet.js');
+const Hoover = require('./classes/hoover.js');
+const SpecSheet = require('./classes/spec-sheet.js');
 
 //Import config file
 const config = require('./config.json');
 
-//Import utils
-const input = require('./utils/input.js');
-const output = require('./utils/output.js');
-
-var run = function(hoover) {
+let run = function(hoover) {
 	console.log(`Starting at: \t${hoover.output()}`);
-	//Make sure we hoover on our starting position TODO: move this in the class logic
-	hoover.hooverPatch();
-
-	while (!hoover.processInstruction()) {
-		//console.log('processing instruction');
-	}
 };
 
 //input.initialize(config.inputFilePath, run);
@@ -40,13 +30,17 @@ let readFile = new Promise(
 readFile.then(
 		// The then() call handles the success case
 		function(result) {
-			console.log('donezo');
-			console.log(result);
+
+			let hoover = new Hoover(result);
+			while (!hoover.processInstruction()) {
+				//console.log('processing instruction');
+			}
 		}
 	)
 	.catch(
 		// The catch block handles the error case.
 		function(reason) {
-			console.log('Handle rejected promise (' + reason + ') here.');
+			//Display an error message before exiting
+			console.log(`An error was encountered while putting together the spec sheet: ${reason} :(`);
 		}
 	);

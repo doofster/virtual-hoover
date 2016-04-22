@@ -6,10 +6,15 @@ const Patch = require('../classes/patch.js');
 const Room = require('../classes/room.js');
 
 module.exports = class Hoover {
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
+	constructor(specSheet) {
+		this.x = specSheet.hoover.x;
+		this.y = specSheet.hoover.y;
+		this.instructions = specSheet.instructions;
+		this.room = new Room(specSheet.room.width, specSheet.room.height, specSheet.patchMap);
 		this.nCleanedPatches = 0;
+
+		//Make sure we hoover on our starting position
+		this.hooverPatch();
 	}
 
 	drive(instruction) {
