@@ -1,17 +1,25 @@
 'use strict';
+
+/**
+ * This class represents a room
+ * Some attributes include:
+ * - width and height dimensions
+ * - a map of dirt patches
+ */
+
+// We are storing the class declaration as the module so it can be used easily in other files
 module.exports = class Room {
+
+	/**
+	 * constructor - Simple constructor
+	 *
+	 * @param  Integer width    Room's width
+	 * @param  Integer height   Room's height
+	 * @param  Integer patchMap Room's map of dirt patches
+	 */
 	constructor(width, height, patchMap) {
 		this.width = width;
 		this.height = height;
 		this.patchMap = patchMap;
 	}
-
-	/*//This method returns true if the given coordinates are inside the room
-	contains(x, y) {
-		console.log('x : ' + x);
-		console.log('y : ' + y);
-		console.log('this.width : ' + this.width);
-		console.log('this.height : ' + this.height);
-		return x > 0 && y > 0 && x < this.width && y < this.height;
-	}*/
 };

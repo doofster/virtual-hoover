@@ -7,7 +7,7 @@
  * 	-	x and y coordinates
  * 	- driving instructions
  * 	- the room that it is in
- * 	- the number of patches it has cleaned
+ * 	- the number of patches it has cleaned so far
  *
  * The methods will provide functionality for processing insturctions, driving around, and cleaning dirt patches.
  *
@@ -17,9 +17,8 @@
 const Patch = require('../classes/patch.js');
 const Room = require('../classes/room.js');
 
-// We are storing the class declaration as the module so it can be used in other files
+// We are storing the class declaration as the module so it can be used easily in other files
 module.exports = class Hoover {
-
 
 	/**
 	 * constructor - This constructor instanciates our Hoover bot from a SpecSheet.
@@ -90,53 +89,84 @@ module.exports = class Hoover {
 		return true;
 	}
 
+
+	/**
+	 * hooverPatch - This method will clean whatever patch is in the Hoover's current position
+	 */
 	hooverPatch() {
+		// Look for a dirt patch in the Hoover's current position
 		let patch = this.room.patchMap.get(Patch.generatePatchKey(this.x, this.y));
+
+		// If there is a patch
 		if (patch !== undefined) {
+			// Clean the patch
 			if (patch.hoover()) {
+				// If the patch hasn't been cleaned already, increment the running count of cleaned patches
 				this.nCleanedPatches++;
 			}
 		}
 	}
 
+
+	/**
+	 * detectCollisions - This method corrects the Hoover's coordinates if it drives into a wall
+	 */
 	detectCollisions() {
 
+		// Store into vars for cleaner syntax
 		let width = this.room.width;
 		let height = this.room.height;
 
+		// Adjust x if it goes beyond right wall
 		if (this.x >= width) {
 			this.x = width - 1;
 		}
+		// Adjust x if it goes beyond left wall
 		if (this.x < 0) {
 			this.x = 0;
 		}
+
+		// Adjust width if it goes beyond top wall
 		if (this.y >= height) {
 			this.y = height - 1;
 		}
+
+		// Adjust width if it goes beyond bottom wall
 		if (this.y < 0) {
 			this.y = 0;
 		}
 	}
 
-	registerInstructions(instructions) {
-		this.instructions = [];
-		for (let instruction of instructions.split("")) {
-			this.instructions.push(instruction);
-		}
-		//console.log(`Instructions: ${this.instructions}`);
-	}
 
+	/**
+	 * output - This method outputs the Hoover's position and number of cleaned patches
+	 */
 	output() {
+		// Write directly to STDOUT instead of console.log()-ing because console.log() throws in extra formatting (i.e. "\n" at the end of each output)
 		process.stdout.write(`${this.x} ${this.y}\n${this.nCleanedPatches}`);
 	}
 
-	processInstruction() {
-		let isDone = !this.drive(this.instructions.shift());
 
+	/**
+	 * processInstruction - This method will process the next instruction
+	 *
+	 * @return Boolean  True if the Hoover has no more instructions
+	 */
+	processInstruction() {
+
+		// Remove and return the first instruction from the list of instructions
+		let nextInstruction = this.instructions.shift();
+
+		// Attempt to drive in that direction
+		let isDone = !this.drive(nextInstruction);
+
+		// If the Hoover has no more instructions
 		if (isDone) {
+			// Output its state to STDOUT
 			this.output();
 		}
 
+		// Return whether the Hoover is done or not
 		return isDone;
 	}
 };

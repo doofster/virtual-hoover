@@ -3,7 +3,7 @@ A program that navigates a imaginary robotic hoover through an equally imaginary
 
 ## Pre-requisites
 
-Make sure you have NodeJS and NPM installed on your machine. Because we are using new ES6 features, make sure your Node is up to date (e.g. v4.4.3).
+Make sure you have Node.js and NPM installed on your machine. Because we are using new ES6 features, make sure your Node is up to date (e.g. v4.4.3).
 
 ## Setup
 
@@ -12,7 +12,6 @@ Open your terminal at the root of this project and run "npm install" to install 
 ## Run
 
 To run the program, open your terminal at the root of this project and run "node index.js".
-
 
 ## Tests
 
