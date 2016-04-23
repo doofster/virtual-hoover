@@ -3,7 +3,7 @@ A program that navigates a imaginary robotic hoover through an equally imaginary
 
 ## Pre-requisites
 
-Make sure you have NodeJS and NPM installed on your machine. Because we are using new ES6 features, make sure your Node is up to date (v4.4.3 for instance).
+Make sure you have NodeJS and NPM installed on your machine. Because we are using new ES6 features, make sure your Node is up to date (e.g. v4.4.3).
 
 ## Setup
 

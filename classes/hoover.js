@@ -1,29 +1,66 @@
 'use strict';
 
-//Importing classes
-const Hoover = require('../classes/hoover.js');
+/**
+ * This class represents the Hoover.
+ *
+ * Some attributes include:
+ * 	-	x and y coordinates
+ * 	- driving instructions
+ * 	- the room that it is in
+ * 	- the number of patches it has cleaned
+ *
+ * The methods will provide functionality for processing insturctions, driving around, and cleaning dirt patches.
+ *
+ */
+
+// Import classes
 const Patch = require('../classes/patch.js');
 const Room = require('../classes/room.js');
 
+// We are storing the class declaration as the module so it can be used in other files
 module.exports = class Hoover {
+
+
+	/**
+	 * constructor - This constructor instanciates our Hoover bot from a SpecSheet.
+	 *
+	 * @param  SpecSheet specSheet All the information gathered from the file read operation
+	 */
 	constructor(specSheet) {
+		// Pull the data out of the spec sheet
 		this.x = specSheet.hoover.x;
 		this.y = specSheet.hoover.y;
 		this.instructions = specSheet.instructions;
+
+		// Create a Room instance
 		this.room = new Room(specSheet.room.width, specSheet.room.height, specSheet.patchMap);
+
+		// Initialize the number of cleaned patches
 		this.nCleanedPatches = 0;
 
-		//Make sure we hoover on our starting position
+		// Make sure we hoover on our starting position
 		this.hooverPatch();
 	}
 
+
+	/**
+	 * drive - This method updates the Hoover's coordinates based on the driving instruction it is given
+	 *
+	 * @param  String instruction 	The cardinal point to drive towards
+	 * @return Boolean             	False if the instruction is invalid
+	 */
 	drive(instruction) {
+
+		// If the instruction is undefined, signal the program that list of instructions is empty by returning false
 		if (instruction === undefined) {
 			return false;
 		}
 
+		// We will increment the Hoover's X and Y coordinates by driveX and driveY respectively
 		let driveX = 0;
 		let driveY = 0;
+
+		// There are 4 possible cardinal points to drive towards
 		switch (instruction) {
 			case "N":
 				driveY = 1;
@@ -38,13 +75,18 @@ module.exports = class Hoover {
 				driveX = -1;
 				break;
 		}
+
+		// Update the Hoover's coordinates
 		this.x += driveX;
 		this.y += driveY;
 
+		// Make sure we aren't trying to drive through a wall
 		this.detectCollisions();
+
+		// Clean eventual dirt patches that might now be in the same position as the Hoover
 		this.hooverPatch();
 
-		//console.log(`* Driving ${instruction} ${driveX},${driveY}: \t${this.output()}`);
+		// Return success
 		return true;
 	}
 
