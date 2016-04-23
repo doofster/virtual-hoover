@@ -7,7 +7,7 @@
  * - whether the patch is dirty or cleaned up
  */
 
-// We are storing the class declaration as the module so it can be used easily in other files
+// We are storing the class declaration as the module so it can be used easily from other files
 module.exports = class Patch {
 
 	/**

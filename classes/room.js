@@ -7,7 +7,7 @@
  * - a map of dirt patches
  */
 
-// We are storing the class declaration as the module so it can be used easily in other files
+// We are storing the class declaration as the module so it can be used easily from other files
 module.exports = class Room {
 
 	/**

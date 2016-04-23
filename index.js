@@ -1,9 +1,13 @@
 'use strict';
 
+/**
+ * This is the entry point of our program
+ */
+
 // Import config file
 const config = require('./config.json');
 
-// Import our app
+// Import the app
 let app = require('./main.js');
 
 // Initialize the app with the filepath specified in the config.json file

@@ -1,58 +1,82 @@
 'use strict';
 
+/**
+ * This module contains all the logic needed to:
+ *  - Load up specifications from a file
+ *  - Set up a Hoover from a spec sheet
+ *  - Pilot the Hoover around
+ */
+
 // Import classes
 const Hoover = require('./classes/hoover.js');
 const SpecSheet = require('./classes/spec-sheet.js');
 
-// This is the entry point for the app.
-// This function loads the specified file from the filePath parameter and will execute: the callback function upon success, the error function upon failure
+/**
+ * init - This function loads the specified file into a spec sheet and will execute:
+ * 					- the callback function upon success
+ * 					-	the error function upon failure
+ *
+ * @param  String 	filePath 	The path of the spec sheet file
+ * @param  Function callback 	The function to run once the spec sheet file has been read
+ * @param  Function error    	The function to run if an error is encountered (Used only in unit tests)
+ */
 let init = function(filePath, callback, error) {
-	// Because the file read operation is asynchronous, let's leverage this fancy Promise API to handle our AJAX cleanly.
-	// (More info on promises: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+	// Because the file read operation is asynchronous, let's leverage this fancy Promise API to handle our AJAX cleanly. (More info on promises: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 	let readFile = new Promise(
+
 		// Our promise will use the resolve() or reject() functions to handle the outcome of our async code
 		function(resolve, reject) {
-			// Let's spin up a "spec sheet" from the file specified in our config.json file
+
+			// Let's spin up a spec sheet from the specified file
 			let specSheet = new SpecSheet(filePath, resolve, reject);
 		}
 	);
 
 	// Here we define what happens when our asynchronous code finishes.
-	readFile.then( // The then() call handles the success case
+	readFile.then(
+			// The then() call handles the success case (i.e. when the resolve function above gets called)
 			function(result) {
-				//Once our spec sheet is fully loaded, let's call the callback method that passed into this init function
-				callback(result);
+				// Quick check to ensure the function is defined
+				if (callback) {
+					// Once our spec sheet is fully loaded, let's call the callback method that passed into this init function
+					callback(result);
+				}
 			}
 		)
-		.catch( // The catch block handles the error case.
-			function(reason) { // Display an error message before exiting
+		.catch(
+			// The catch block handles the error case.
+			function(reason) {
+				// Display an error message before exiting
 				console.log(`An error was encountered while putting together the spec sheet :(\n${reason}`);
-				error();
+
+				// Quick check to ensure the function is defined
+				if (error) {
+					// Run the error function that was passed in as a parameter
+					error();
+				}
 			}
 		);
 };
 module.exports.init = init; // Make this method accesible to the module
 
-// This function takes in a specSheet and spins up a hoover.
+// This function takes in a specSheet and spins up a Hoover.
 // The hoover will then execute all its instructions.
 // Optional callback will be run at the end
+
+/**
+ * run - This method sets up a Hoover from a spec sheet and executes all its driving instructions
+ *
+ * @param  SpecSheet	specSheet	The specifications for the Hoover
+ * @param  Function 	callback	An optional callback to run at the end of the method. (Used in unit tests)
+ */
 let run = function(specSheet, callback) {
 
-	let hoover;
+	// Initialize the Hoover
+	let hoover = bootUpHoover(specSheet);
+	processInstructions(hoover);
 
-	hoover = bootUpHoover(specSheet);
-
-	try { // Process all instructions one by one
-		while (!hoover.processInstruction()) {
-			//console.log('processing instruction');
-		}
-
-		//return; //That's it we're done!
-	} catch (e) { // Display an error message before exiting
-		console.log(`An error was encountered while processing an instruction :(\n${e}`);
-	}
-
-	module.exports.hoover = hoover; // Make this var accesible to the module
+	module.exports.hoover = hoover; // Make the Hoover accesible to the module
 
 	//Only call the optional callback if it is defined
 	if (callback) {
@@ -64,7 +88,10 @@ module.exports.run = run; // Make this method accesible to the module
 
 let bootUpHoover = function(specSheet) {
 	let hoover;
-	try { // Instanciate a hoover from the resulting spec sheet
+
+	// Wrap our code in a try-catch for good measure
+	try {
+		// Instanciate a hoover from the resulting spec sheet
 		hoover = new Hoover(specSheet);
 	} catch (e) { // Display an error message before exiting
 		console.log(`An error was encountered while booting up the hoover :(\n${e}`);
@@ -72,3 +99,15 @@ let bootUpHoover = function(specSheet) {
 	return hoover;
 };
 module.exports.bootUpHoover = bootUpHoover;
+
+let processInstructions = function(hoover) {
+	// Wrap our code in a try-catch for good measure
+	try {
+		// Process all instructions one by one until there are none left
+		while (!hoover.processInstruction()) {
+			// Nothing happening here
+		}
+	} catch (e) { // Display an error message before exiting
+		console.log(`An error was encountered while processing an instruction :(\n${e}`);
+	}
+}

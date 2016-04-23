@@ -17,7 +17,7 @@
 const Patch = require('../classes/patch.js');
 const Room = require('../classes/room.js');
 
-// We are storing the class declaration as the module so it can be used easily in other files
+// We are storing the class declaration as the module so it can be used easily from other files
 module.exports = class Hoover {
 
 	/**
