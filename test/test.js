@@ -1,3 +1,7 @@
+/**
+ * This test suite does a quick runthrough of the program's execution by doing the problem from the prompt and doing some spot checking
+ */
+
 var expect = require('chai').expect;
 var folder = './test/files/';
 

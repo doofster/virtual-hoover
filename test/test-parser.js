@@ -1,3 +1,7 @@
+/**
+ * This test suite will make sure loading up an input file works properly and will make sure there are no uncaught exceptions when the input is faulty
+ */
+
 var expect = require('chai').expect;
 var folder = './test/files/';
 

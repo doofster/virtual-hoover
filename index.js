@@ -7,7 +7,7 @@
 // Import config file
 const config = require('./config.json');
 
-// Import the app
+// Import the app module
 let app = require('./main.js');
 
 // Initialize the app with the filepath specified in the config.json file

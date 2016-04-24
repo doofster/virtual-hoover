@@ -60,10 +60,6 @@ let init = function(filePath, callback, error) {
 };
 module.exports.init = init; // Make this method accesible to the module
 
-// This function takes in a specSheet and spins up a Hoover.
-// The hoover will then execute all its instructions.
-// Optional callback will be run at the end
-
 /**
  * run - This method sets up a Hoover from a spec sheet and executes all its driving instructions
  *
@@ -86,6 +82,12 @@ let run = function(specSheet, callback) {
 };
 module.exports.run = run; // Make this method accesible to the module
 
+/**
+ * bootUpHoover - This method is responsible for returning a Hoover from a given spec sheet
+ *
+ * @param  SpecSheet specSheet 	The specifications for the Hoover
+ * @return Hoover           		The instanciated Hoover
+ */
 let bootUpHoover = function(specSheet) {
 	let hoover;
 
@@ -93,13 +95,20 @@ let bootUpHoover = function(specSheet) {
 	try {
 		// Instanciate a hoover from the resulting spec sheet
 		hoover = new Hoover(specSheet);
-	} catch (e) { // Display an error message before exiting
+	} catch (e) {
+		// Display an error message before exiting
 		console.log(`An error was encountered while booting up the hoover :(\n${e}`);
 	}
 	return hoover;
 };
 module.exports.bootUpHoover = bootUpHoover;
 
+
+/**
+ * processInstructions - This method will execute all of the Hoover's instructions one by one until there are none left
+ *
+ * @param  Hoover hoover The Hoover to operate
+ */
 let processInstructions = function(hoover) {
 	// Wrap our code in a try-catch for good measure
 	try {
@@ -107,7 +116,8 @@ let processInstructions = function(hoover) {
 		while (!hoover.processInstruction()) {
 			// Nothing happening here
 		}
-	} catch (e) { // Display an error message before exiting
+	} catch (e) {
+		// Display an error message before exiting
 		console.log(`An error was encountered while processing an instruction :(\n${e}`);
 	}
-}
+};

@@ -1,8 +1,11 @@
+/**
+ * This test suite will make sure our Hoover is running correctly
+ */
+
 var expect = require('chai').expect;
 var folder = './test/files/';
 var Hoover = require('../classes/hoover.js');
 var Patch = require('../classes/patch.js');
-//var index = require('../index.js');
 
 describe('Hoover', function() {
   describe('I - Driving', function() {
