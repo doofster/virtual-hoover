@@ -112,11 +112,11 @@ module.exports = class SpecSheet {
 				// Parse line
 				this.parseHooverPosition(line);
 			} catch (e) {
-				//All exceptions in this block reject the promise with the appropriate error message
+				// All exceptions in this block reject the promise with the appropriate error message
 				reject('Bad hoover starting position.');
 			}
 
-			//All following lines can be either patch coordinates, or instructions
+			// All following lines can be either patch coordinates, or instructions
 		} else {
 			let currentLineIsPatch;
 
@@ -133,7 +133,7 @@ module.exports = class SpecSheet {
 					// Parse line
 					this.parsePatchPosition(line);
 				} catch (e) {
-					//All exceptions in this block reject the promise with the appropriate error message
+					// All exceptions in this block reject the promise with the appropriate error message
 					reject('Bad patch position.');
 				}
 				// Else if the line is a sequence of driving instructions
@@ -142,7 +142,7 @@ module.exports = class SpecSheet {
 					// Parse line
 					this.parseInstructions(line);
 				} catch (e) {
-					//All exceptions in this block reject the promise with the appropriate error message
+					// All exceptions in this block reject the promise with the appropriate error message
 					reject('Bad instruction.');
 				}
 			}

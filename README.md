@@ -1,25 +1,25 @@
 # virtual-hoover
-A program that navigates a imaginary robotic hoover through an equally imaginary room.
+A program that navigates an imaginary robotic hoover through an equally imaginary room.
 
-## Pre-requisites
+### Pre-requisites
 
 Make sure you have Node.js and NPM installed on your machine. Because we are using new ES6 features, make sure your Node is up to date (e.g. v4.4.3).
 
-## Setup
+### Setup
 
 Open your terminal at the root of this project and run "npm install" to install all of the dependencies.
 
-## Run
+### Run
 
 To run the program, open your terminal at the root of this project and run "node index.js".
 
-## Tests
+### Tests
 
 To run the test suite, install Mocha globally on your machine with the following command: "npm install -g mocha".
 
 Open your terminal at the root of this project and run "npm test" to run all tests. Use 'mocha ./test/{file-name}' at the root of this project to run individual files.
 
-## Grunt
+### Grunt
 
 A default Grunt task has been defined to lint and beautify JS files in the project.
 
